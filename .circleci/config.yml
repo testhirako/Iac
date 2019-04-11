@@ -31,7 +31,7 @@ jobs:
             docker build -t sample-hiraki .
       - run:
           name: Login to AWS ECR
-          command: $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+          command: aws ecr get-login --no-include-email
       - run:
           name: tag setting
           command: |
