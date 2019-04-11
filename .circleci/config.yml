@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-## test
-=======
->>>>>>> 7f111725a9e3627ac3c599ddcc730637ae663abe
 version: 2
 jobs:
   build:
@@ -13,6 +9,8 @@ jobs:
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${CIRCLE_SHA1}"' >> $BASH_ENV
+            aws configure set aws_access_key_id AKIASYQFHUYM7ZHTU6EJ --profile hiraki
+            aws configure set aws_secret_access_key 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 --profile hiraki
       - run:
           name: Setup AWS CLI
           command: |
@@ -20,21 +18,23 @@ jobs:
             unzip awscli-bundle.zip
             sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - run:
+          name: ECR Login
+          command: |
+            $(aws ecr get-login --no-include-email --region ap-northeast-1)    
+      - run:
           name: Build Image
           command: |
-            docker build -t ${FULL_IMAGE_NAME} .
-      - run:
-          name: Run Tests
-          command: |
-            dgoss run ${FULL_IMAGE_NAME} /usr/sbin/httpd -DFOREGROUND
+            docker build -t sample-hiraki .
       - run:
           name: Login to AWS ECR
           command: eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - run:
-          name: Push Docker Image
+          name: tag setting
           command: |
-<<<<<<< HEAD
-            docker push ${FULL_IMAGE_NAME}      
-=======
-            docker push ${FULL_IMAGE_NAME}
->>>>>>> 7f111725a9e3627ac3c599ddcc730637ae663abe
+             docker tag sample-hiraki:latest 190063289881.dkr.ecr.ap-northeast-1.amazonaws.com/sample-hiraki:latest
+      - run:
+          name: Docker Push
+          command: |
+             docker push 190063289881.dkr.ecr.ap-northeast-1.amazonaws.com/sample-hiraki:latest       
+
+
