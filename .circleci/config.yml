@@ -20,6 +20,7 @@ jobs:
           command: |
             aws configure set aws_access_key_id AKIASYQFHUYM7ZHTU6EJ --profile hiraki
             aws configure set aws_secret_access_key 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 --profile hiraki
+            cat ~/.aws/credentials
       - run:
           name: ECR Login
           command: |
