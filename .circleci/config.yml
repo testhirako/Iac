@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-  working_directory: /home/circleci/opteditor-for-lap
     steps:
       - checkout
       - run:
@@ -21,7 +20,6 @@ jobs:
             sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 jobs:
   deploy_job:
-  working_directory: /home/circleci/opteditor-for-lap
     steps:
       - checkout
       - run:
@@ -34,7 +32,8 @@ jobs:
 workflows:
   deploy:
     jobs:
-      - deploy:
+      - build:
+      - deploy_job:
         filters:
           branches:
             only: deploy
