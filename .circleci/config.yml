@@ -2,7 +2,6 @@ version: 2
 jobs:
   build:
   working_directory: /home/circleci/opteditor-for-lap
-    machine: true
     steps:
       - checkout
       - run:
@@ -23,7 +22,6 @@ jobs:
 jobs:
   deploy_job:
   working_directory: /home/circleci/opteditor-for-lap
-    machine: true
     steps:
       - checkout
       - run:
