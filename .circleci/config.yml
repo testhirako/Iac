@@ -33,5 +33,5 @@ workflows:
   version: 2
   Deploy:
     jobs:
-      - build:
-      - deploy_job:
+      - build
+      - deploy_job
