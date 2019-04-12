@@ -27,6 +27,7 @@ jobs:
             docker build -t sample-hiraki .
             docker tag sample-hiraki:latest 190063289881.dkr.ecr.ap-northeast-1.amazonaws.com/sample-hiraki:latest
             docker push 190063289881.dkr.ecr.ap-northeast-1.amazonaws.com/sample-hiraki:latest
+            aws ecs update-service --cluster hiraki-test-20190411 --service sample-hiraki-1 --force-new-deployment --profile hiraki
 workflows:
   version: 2
   Deploy:
